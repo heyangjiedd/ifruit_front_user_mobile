@@ -1,0 +1,12 @@
+{
+  "login.bar.title": "Login In",
+  "login.bar.account": "account",
+  "login.bar.password": "password",
+  "login.bar.input.account": "please input a account",
+  "login.bar.input.password": "please input a password",
+  "login.bar.input.agreement": "Agree agreement",
+  "ok": "OK",
+  "cannel": "cannel",
+  "zh": "Chinese",
+  "en": "English"
+}

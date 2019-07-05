@@ -1,0 +1,12 @@
+{
+  "login.bar.title": "登录",
+  "login.bar.account": "账号",
+  "login.bar.password": "密码",
+  "login.bar.input.account": "请输入账号",
+  "login.bar.input.password": "请输入密码",
+  "login.bar.input.agreement": "同意协议",
+  "ok": "确定",
+  "cannel": "取消",
+  "zh": "中文",
+  "en": "英文"
+}
