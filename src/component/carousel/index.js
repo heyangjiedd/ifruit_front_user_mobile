@@ -28,9 +28,8 @@ class Index extends React.Component {
                       infinite
             >
                 {this.state.data.map((val,index) => (
-                    <a
+                    <span
                         key={index}
-                        href="http://www.alipay.com"
                         style={{ display: 'inline-block', width: '100%'}}
                     >
                         <img
@@ -42,7 +41,7 @@ class Index extends React.Component {
                                 this.setState({ imgHeight: 'auto' });
                             }}
                         />
-                    </a>
+                    </span>
                 ))}
             </Carousel>
         )

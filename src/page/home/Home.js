@@ -1,10 +1,15 @@
 import React from 'react';
 import {TabBar,} from 'antd-mobile';
-import {Redirect, Route, } from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import Info from "../info/Info";
 import Activity from "../activity/Activity";
-import Friend from "../friend/Friend";
 import Main from "../main/Main";
+import home from '../../assets/icon/home.svg'
+import home_select from '../../assets/icon/home_select.svg'
+import about from '../../assets/icon/about.svg'
+import about_select from '../../assets/icon/about_select.svg'
+import user from '../../assets/icon/user.svg'
+import user_select from '../../assets/icon/user_select.svg'
 
 class TabBarHome extends React.Component {
     constructor(props) {
@@ -35,18 +40,16 @@ class TabBarHome extends React.Component {
                     <TabBar.Item
                         title="首页"
                         key="Life"
-                        icon={<div style={{
-                            width: '22px',
-                            height: '22px',
-                            background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat'
-                        }}
+                        icon={<img
+                            src={home}
+                            width='22px'
+                            height='22px'
                         />
                         }
-                        selectedIcon={<div style={{
-                            width: '22px',
-                            height: '22px',
-                            background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat'
-                        }}
+                        selectedIcon={<img
+                            src={home_select}
+                            width='22px'
+                            height='22px'
                         />
                         }
                         selected={this.props.history.location.pathname === '/home'}
@@ -58,24 +61,21 @@ class TabBarHome extends React.Component {
                     </TabBar.Item>
                     <TabBar.Item
                         icon={
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat'
-                            }}
+                            <img
+                                src={about}
+                                width='22px'
+                                height='22px'
                             />
                         }
                         selectedIcon={
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat'
-                            }}
+                            <img
+                                src={about_select}
+                                width='22px'
+                                height='22px'
                             />
                         }
-                        title="活动"
+                        title="简介"
                         key="Koubei"
-                        badge={'new'}
                         selected={this.props.history.location.pathname === '/activity'}
                         onPress={() => {
                             this.props.history.push(`/activity`)
@@ -84,54 +84,38 @@ class TabBarHome extends React.Component {
                     >
                     </TabBar.Item>
                     <TabBar.Item
-                        icon={
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                            }}
-                            />
-                        }
-                        selectedIcon={
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                            }}
-                            />
-                        }
-                        title="群组"
-                        key="Friend"
-                        dot
-                        selected={this.props.history.location.pathname === '/friend'}
-                        onPress={() => {
-                            this.props.history.push(`/friend`)
-                        }}
-                    >
-                    </TabBar.Item>
-                    <TabBar.Item
-                        icon={{uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg'}}
-                        selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg'}}
+                        icon={<img
+                            src={user}
+                            width='22px'
+                            height='22px'/>}
+                        selectedIcon={<img
+                            src={user_select}
+                            width='22px'
+                            height='22px'/>}
                         title="我的"
                         key="my"
-                        badge={99}
-                        selected={this.props.history.location.pathname === '/login'}
+                        selected={this.props.history.location.pathname === '/info'}
                         onPress={() => {
-                            this.props.history.push(`/login`)
+                            this.props.history.push(`/info`)
                         }}
                     >
                     </TabBar.Item>
                 </TabBar>
             </div>
-            <div >
+            <div>
                 <Route path="/" exact render={() => (
                     <Redirect to="/home"/>
                 )}></Route>
                 <Route path={`/home`} component={Main}/>
                 <Route path={`/activity`} component={Activity}/>
-                <Route path={`/friend`} component={Friend}/>
-                <Route path={`/login`} component={Info}/>
-            </div></div>)
+                <Route path={`/info`} render={() => (
+                    this.hidden ? (
+                        <Redirect to="/login" />
+                    ) : (
+                        <Info />
+                    ))}/>
+            </div>
+        </div>)
     }
 
     componentWillReceiveProps() {
@@ -154,4 +138,5 @@ class TabBarHome extends React.Component {
 
     }
 }
+
 export default TabBarHome;
