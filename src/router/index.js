@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route,Switch} from "react-router-dom";
 import Home from '../page/home/Home';
 import Login from '../page/login/Login';
+import Product from '../page/product/index';
 import {LocaleProvider} from "antd-mobile";
 import connect from "react-redux/es/connect/connect";
 import {IntlProvider} from 'react-intl';
@@ -21,6 +22,7 @@ class Index extends React.Component {
                 <BrowserRouter>
                         <Switch>
                             <Route path="/login" exact component={Login}></Route>
+                            <Route path="/product" exact component={Product}></Route>
                             <Route path="/" component={Home}></Route>
                         </Switch>
                 </BrowserRouter>

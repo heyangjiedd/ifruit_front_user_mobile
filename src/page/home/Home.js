@@ -10,7 +10,13 @@ import about from '../../assets/icon/about.svg'
 import about_select from '../../assets/icon/about_select.svg'
 import user from '../../assets/icon/user.svg'
 import user_select from '../../assets/icon/user_select.svg'
+import connect from "react-redux/es/connect/connect";
 
+import styles from './index.module.less'
+
+@connect((state) => ({
+    user: state.user,
+}))
 class TabBarHome extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +35,7 @@ class TabBarHome extends React.Component {
 
     render() {
         return (<div>
-            <div style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
+            <div style={{position: 'fixed', bottom: 0, left: 0, right: 0}}>
                 <TabBar
                     unselectedTintColor="#949494"
                     tintColor="#33A3F4"
@@ -44,12 +50,14 @@ class TabBarHome extends React.Component {
                             src={home}
                             width='22px'
                             height='22px'
+                            alt={''}
                         />
                         }
                         selectedIcon={<img
                             src={home_select}
                             width='22px'
                             height='22px'
+                            alt={''}
                         />
                         }
                         selected={this.props.history.location.pathname === '/home'}
@@ -65,6 +73,7 @@ class TabBarHome extends React.Component {
                                 src={about}
                                 width='22px'
                                 height='22px'
+                                alt={''}
                             />
                         }
                         selectedIcon={
@@ -72,6 +81,7 @@ class TabBarHome extends React.Component {
                                 src={about_select}
                                 width='22px'
                                 height='22px'
+                                alt={''}
                             />
                         }
                         title="简介"
@@ -87,11 +97,13 @@ class TabBarHome extends React.Component {
                         icon={<img
                             src={user}
                             width='22px'
-                            height='22px'/>}
+                            height='22px'
+                            alt={''}/>}
                         selectedIcon={<img
                             src={user_select}
                             width='22px'
-                            height='22px'/>}
+                            height='22px'
+                            alt={''}/>}
                         title="我的"
                         key="my"
                         selected={this.props.history.location.pathname === '/info'}
@@ -102,17 +114,17 @@ class TabBarHome extends React.Component {
                     </TabBar.Item>
                 </TabBar>
             </div>
-            <div>
+            <div className={styles.main}>
                 <Route path="/" exact render={() => (
                     <Redirect to="/home"/>
                 )}></Route>
                 <Route path={`/home`} component={Main}/>
                 <Route path={`/activity`} component={Activity}/>
                 <Route path={`/info`} render={() => (
-                    this.hidden ? (
-                        <Redirect to="/login" />
+                    this.props.user ? (
+                        <Info/>
                     ) : (
-                        <Info />
+                        <Redirect to="/login"/>
                     ))}/>
             </div>
         </div>)
