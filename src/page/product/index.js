@@ -1,97 +1,88 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {NavBar, Icon, ListView ,} from 'antd-mobile';
+import {Badge, ListView, PullToRefresh, NavBar, Icon, Flex, WingBlank, Button, WhiteSpace} from 'antd-mobile';
 import one from "../../assets/images/one.png";
 import two from "../../assets/images/two.png";
 import three from "../../assets/images/three.jpg";
 
-function MyBody(props) {
-    return (
-        <div className="am-list-body my-body">
-            <span style={{ display: 'none' }}>you can custom body wrap element</span>
-            {props.children}
-        </div>
-    );
-}
-
 const data = [
     {
         img: one,
-        title: '芒果',
-        des: '不是所有的兼职汪都需要风吹日晒',
+        title: '枇杷',
+        des: '攀枝花特产，买到就是赚到，千万不要错过',
     },
     {
         img: two,
-        title: '枇杷',
-        des: '不是所有的兼职汪都需要风吹日晒',
+        title: '芒果',
+        des: '攀枝花特产，买到就是赚到，千万不要错过',
     },
     {
         img: three,
         title: '石榴',
-        des: '不是所有的兼职汪都需要风吹日晒',
+        des: '攀枝花特产，买到就是赚到，千万不要错过',
     },
 ];
-const NUM_SECTIONS = 5;
-const NUM_ROWS_PER_SECTION = 5;
+const NUM_ROWS = 20;
 let pageIndex = 0;
 
-const dataBlobs = {};
-let sectionIDs = [];
-let rowIDs = [];
 function genData(pIndex = 0) {
-    for (let i = 0; i < NUM_SECTIONS; i++) {
-        const ii = (pIndex * NUM_SECTIONS) + i;
-        const sectionName = `Section ${ii}`;
-        sectionIDs.push(sectionName);
-        dataBlobs[sectionName] = sectionName;
-        rowIDs[ii] = [];
-
-        for (let jj = 0; jj < NUM_ROWS_PER_SECTION; jj++) {
-            const rowName = `S${ii}, R${jj}`;
-            rowIDs[ii].push(rowName);
-            dataBlobs[rowName] = rowName;
-        }
+    const dataArr = [];
+    for (let i = 0; i < NUM_ROWS; i++) {
+        dataArr.push(`row - ${(pIndex * NUM_ROWS) + i}`);
     }
-    sectionIDs = [...sectionIDs];
-    rowIDs = [...rowIDs];
+    return dataArr;
 }
 
 class Index extends React.Component {
     constructor(props) {
         super(props);
-        const getSectionData = (dataBlob, sectionID) => dataBlob[sectionID];
-        const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
-
         const dataSource = new ListView.DataSource({
-            getRowData,
-            getSectionHeaderData: getSectionData,
             rowHasChanged: (row1, row2) => row1 !== row2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
         });
 
         this.state = {
             dataSource,
+            refreshing: true,
             isLoading: true,
-            height: document.documentElement.clientHeight * 3 / 4,
+            height: document.documentElement.clientHeight,
+            useBodyScroll: false,
         };
     }
-    state = {
+    componentDidUpdate() {
+        if (this.state.useBodyScroll) {
+            document.body.style.overflow = 'auto';
+        } else {
+            document.body.style.overflow = 'hidden';
+        }
     }
-    componentDidMount() {
-        // you can scroll to the specified position
-        // setTimeout(() => this.lv.scrollTo(0, 120), 800);
 
-        const hei = document.documentElement.clientHeight - ReactDOM.findDOMNode(this.lv).parentNode.offsetTop;
+    componentDidMount() {
+        const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+
+        setTimeout(() => {
+            this.rData = genData();
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(genData()),
+                height: hei,
+                refreshing: false,
+                isLoading: false,
+            });
+        }, 1500);
+    }
+
+    onRefresh = () => {
+        this.setState({ refreshing: true, isLoading: true });
         // simulate initial Ajax
         setTimeout(() => {
-            genData();
+            this.rData = genData();
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
+                dataSource: this.state.dataSource.cloneWithRows(this.rData),
+                refreshing: false,
                 isLoading: false,
-                height: hei,
             });
         }, 600);
-    }
+    };
+
     onEndReached = (event) => {
         // load new data
         // hasMore: from backend data, indicates whether it is the last page, here is false
@@ -101,13 +92,14 @@ class Index extends React.Component {
         console.log('reach end', event);
         this.setState({ isLoading: true });
         setTimeout(() => {
-            genData(++pageIndex);
+            this.rData = [...this.rData, ...genData(++pageIndex)];
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
+                dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,
             });
         }, 1000);
-    }
+    };
+
     render() {
         const separator = (sectionID, rowID) => (
             <div
@@ -127,57 +119,82 @@ class Index extends React.Component {
             }
             const obj = data[index--];
             return (
-                <div key={rowID} style={{ padding: '0 15px' }}>
-                    <div
-                        style={{
-                            lineHeight: '50px',
-                            color: '#888',
-                            fontSize: 18,
-                            borderBottom: '1px solid #F6F6F6',
-                        }}
-                    >{obj.title}</div>
-                    <div style={{display: 'flex', padding: '15px 0' }}>
-                        <img style={{ height: '64px', marginRight: '15px' }} src={obj.img} alt="" />
-                        <div style={{ lineHeight: 1 }}>
-                            <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.des}</div>
-                            <div><span style={{ fontSize: '30px', color: '#FF6E27' }}>35</span>¥ {rowID}</div>
+                <div key={rowID}
+                     style={{
+                         padding: '0 15px',
+                         backgroundColor: 'white',
+                     }}
+                >
+                    <div style={{ height: '50px', lineHeight: '50px', color: '#888', fontSize: '16px', borderBottom: '1px solid #ddd' }}>
+                        {obj.title}
+                    </div>
+
+                    <div style={{display: 'flex',padding: '10px 0',}}>
+                        <img style={{ height: '63px', width: '63px', marginRight: '15px' }} src={obj.img} alt="" />
+                        <div style={{ display: 'inline-block' }}>
+                            <div style={{ marginBottom: '8px', color: '#000', fontSize: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '250px' }}>{obj.des}-{rowData}</div>
+                            <div style={{marginTop: '5px',}}><span style={{ fontSize: '12px' }}>月销量</span>
+                                <span style={{  marginLeft: '5px', fontSize: '16px',color: '#FF6E27' }}>{rowID}</span>
+                            </div>
+                            <Flex justify="between" align='end'>
+                                <div>
+                                    <Badge text="有机"
+                                           style={{
+                                               backgroundColor: '#fff',
+                                               borderRadius: 2,
+                                               color: '#f19736',
+                                               border: '1px solid #f19736',
+                                           }}
+                                    />
+                                    <Badge text="绿色"
+                                           style={{
+                                               marginLeft: 12,
+                                               backgroundColor: '#fff',
+                                               borderRadius: 2,
+                                               color: '#4cf13f',
+                                               border: '1px solid #4cf13f',
+                                           }}
+                                    />
+                                </div>
+                                <div >
+                                    <span style={{ fontSize: '24px', color: '#FF6E27' }}>{rowID}</span> <span>元/斤</span>
+                                </div>
+                            </Flex>
+
                         </div>
                     </div>
                 </div>
             );
         };
-        return (
-            <div style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}>
-                <NavBar
-                    mode="light"
-                    icon={<Icon type="left"/>}
-                    onLeftClick={() => this.props.history.goBack(-1)}
-                > 产品列表</NavBar>
-                <ListView
-                    ref={el => this.lv = el}
-                    dataSource={this.state.dataSource}
-                    renderHeader={() => <span>产品列表</span>}
-                    renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                        {this.state.isLoading ? 'Loading...' : 'Loaded'}
-                    </div>)}
-                    // renderSectionHeader={sectionData => (
-                    //     <div>{`Task ${sectionData.split(' ')[1]}`}</div>
-                    // )}
-                    renderBodyComponent={() => <MyBody />}
-                    renderRow={row}
-                    renderSeparator={separator}
-                    style={{
-                        height: this.state.height,
-                        overflow: 'auto',
-                    }}
-                    pageSize={4}
-                    onScroll={() => { console.log('scroll'); }}
-                    scrollRenderAheadDistance={500}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={10}
-                />
-            </div>
-        );
+        return (<div>
+            <NavBar
+                mode="light"
+                icon={<Icon type="left"/>}
+                onLeftClick={() => this.props.history.goBack(-1)}
+            > 产品列表</NavBar>
+            <ListView
+                key={this.state.useBodyScroll ? '0' : '1'}
+                ref={el => this.lv = el}
+                dataSource={this.state.dataSource}
+                renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+                    {this.state.isLoading ? 'Loading...' : 'Loaded'}
+                </div>)}
+                renderRow={row}
+                renderSeparator={separator}
+                useBodyScroll={this.state.useBodyScroll}
+                style={this.state.useBodyScroll ? {} : {
+                    height: this.state.height,
+                    border: '1px solid #ddd',
+                    margin: '5px 0',
+                }}
+                pullToRefresh={<PullToRefresh
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
+                />}
+                onEndReached={this.onEndReached}
+                pageSize={5}
+            />
+        </div>);
     }
 }
 
