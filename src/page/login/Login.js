@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {createForm} from 'rc-form';
 import {NavBar, Icon, List, InputItem, Flex, WhiteSpace, Toast, Button,} from 'antd-mobile';
+import {login} from '../../api/login'
 
 @connect((state) => ({
     user: state.user,
@@ -35,9 +36,11 @@ class Index extends React.Component {
                 }, true)
                 return;
             }
-            form.resetFields();
-            this.props.addUser({...fieldsValue})
-            this.props.history.goBack(-1)
+            login({...fieldsValue}).then(()=>{
+                form.resetFields();
+                this.props.addUser({...fieldsValue});
+                this.props.history.goBack(-1)
+            })
         });
     }
 
@@ -54,10 +57,9 @@ class Index extends React.Component {
                 <Flex style={{height: "calc(100% - 45px)"}} direction="column" justify="center">
                     <List>
                         <InputItem
-                            {...getFieldProps('account', {
+                            {...getFieldProps('userName', {
                                 rules: [{required: true, message: '请输入账号！'}],
                             })}
-                            type="phone"
                             placeholder={intl.formatMessage({id: 'login.bar.input.account'})}
                         ><FormattedMessage id="login.bar.account"/></InputItem>
                         <WhiteSpace size="sm" style={{background: '#f5f5f9'}}/>

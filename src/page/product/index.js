@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Badge, ListView, PullToRefresh, NavBar, Icon, Flex, WingBlank, Button, WhiteSpace} from 'antd-mobile';
+import {Badge, ListView, PullToRefresh, NavBar, Icon, Flex} from 'antd-mobile';
 import one from "../../assets/images/one.png";
 import two from "../../assets/images/two.png";
 import three from "../../assets/images/three.jpg";
@@ -89,7 +89,6 @@ class Index extends React.Component {
         if (this.state.isLoading && !this.state.hasMore) {
             return;
         }
-        console.log('reach end', event);
         this.setState({ isLoading: true });
         setTimeout(() => {
             this.rData = [...this.rData, ...genData(++pageIndex)];
