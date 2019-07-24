@@ -3,6 +3,7 @@ import {toggleLanguage} from '../../action/language';
 import {addUser, deleteUser} from '../../action/user';
 import {connect} from 'react-redux';
 import {NavBar, Icon, WingBlank, Flex, WhiteSpace, Popover, Button} from 'antd-mobile';
+import {withRouter} from "react-router";
 
 const Item = Popover.Item;
 
@@ -12,6 +13,7 @@ const Item = Popover.Item;
     count: state.count,
     language_json: state.language_json,
 }), {toggleLanguage, addUser, deleteUser})
+@withRouter
 class Index extends React.Component {
     state = {
         visible: false,
@@ -25,6 +27,10 @@ class Index extends React.Component {
         });
         this.props.deleteUser()
     };
+    goInput = (url)=>{
+        debugger
+        this.props.history.push(url)
+    }
 
     render() {
         return (
@@ -60,7 +66,7 @@ class Index extends React.Component {
                 </NavBar>
                 <Flex style={{height: "calc(100% - 45px)"}} direction="column" justify="center">
                     <WingBlank style={{width:'80%'}}>
-                        <Button type="primary">录入农户信息</Button><WhiteSpace />
+                        <Button type="primary" onClick={()=>this.goInput(`/farmerIndex`)}>录入农户信息</Button><WhiteSpace />
                         <Button type="primary">录入农资信息</Button><WhiteSpace />
                         <Button type="primary">录入辅料信息</Button><WhiteSpace />
                     </WingBlank>

@@ -23,6 +23,9 @@ class Index extends React.Component {
                         <Switch>
                             <Route path="/login" exact component={Login}></Route>
                             <Route path="/product" exact component={Product}></Route>
+                            <Route path="/farmerIndex" exact component={Product}></Route>
+                            <Route path="/productIndex" exact component={Product}></Route>
+                            <Route path="/excipientIndex" exact component={Product}></Route>
                             <Route path="/" component={Home}></Route>
                         </Switch>
                 </BrowserRouter>

@@ -83,7 +83,7 @@ class App extends React.Component {
                 </TabBar>
                 <div style={{padding:'5px 0',background:'#f5f5f9'}}>
                     <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 2px' } }}>
-                        这个会影响dom渲染，开发环境暂时隐藏
+                        号外！号外！攀枝花今日最新水果
                     </NoticeBar>
                 </div>
                 <List.Item extra="更多" arrow="horizontal" onClick={this.goToProduct}>
