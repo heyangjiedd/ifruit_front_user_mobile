@@ -3,6 +3,9 @@ import {BrowserRouter, Route,Switch} from "react-router-dom";
 import Home from '../page/home/Home';
 import Login from '../page/login/Login';
 import Product from '../page/product/index';
+import FarmerInput from '../page/input/farmer';
+import ProductInput from '../page/input/product';
+import ExcipentInput from '../page/input/excipent';
 import {LocaleProvider} from "antd-mobile";
 import connect from "react-redux/es/connect/connect";
 import {IntlProvider} from 'react-intl';
@@ -23,9 +26,9 @@ class Index extends React.Component {
                         <Switch>
                             <Route path="/login" exact component={Login}></Route>
                             <Route path="/product" exact component={Product}></Route>
-                            <Route path="/farmerIndex" exact component={Product}></Route>
-                            <Route path="/productIndex" exact component={Product}></Route>
-                            <Route path="/excipientIndex" exact component={Product}></Route>
+                            <Route path="/farmerIndex" exact component={FarmerInput}></Route>
+                            <Route path="/productIndex" exact component={ProductInput}></Route>
+                            <Route path="/excipientIndex" exact component={ExcipentInput}></Route>
                             <Route path="/" component={Home}></Route>
                         </Switch>
                 </BrowserRouter>
