@@ -1,7 +1,7 @@
 import {
     USER_ADD,
     USER_DELETE,
-} from '../action/user'
+} from '@/action/user'
 let user = JSON.parse(localStorage.getItem('user'));
 export default (state = user, action) => {
     switch (action.type) {

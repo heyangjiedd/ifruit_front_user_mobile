@@ -1,6 +1,6 @@
 import enUS from 'antd-mobile/lib/locale-provider/en_US';
-import zh from '../language/zh.json'
-import en from '../language/en.json'
+import zh from '@/language/zh.json'
+import en from '@/language/en.json'
 export const languages = [
     {
         value: '中国',

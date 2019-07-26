@@ -1,11 +1,11 @@
 import React from 'react';
-import {toggleLanguage} from '../../action/language';
-import {addUser} from '../../action/user';
+import {toggleLanguage} from '@/action/language';
+import {addUser} from '@/action/user';
 import {connect} from 'react-redux';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {createForm} from 'rc-form';
 import {NavBar, Icon, List, InputItem, Flex, WhiteSpace, Toast, Button,} from 'antd-mobile';
-import {login} from '../../api/login'
+import {login} from '@/api/login'
 
 @connect((state) => ({
     user: state.user,

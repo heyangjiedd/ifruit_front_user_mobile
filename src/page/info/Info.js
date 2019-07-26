@@ -1,6 +1,6 @@
 import React from 'react';
-import {toggleLanguage} from '../../action/language';
-import {addUser, deleteUser} from '../../action/user';
+import {toggleLanguage} from '@/action/language';
+import {addUser, deleteUser} from '@/action/user';
 import {connect} from 'react-redux';
 import {NavBar, Icon, WingBlank, Flex, WhiteSpace, Popover, Button} from 'antd-mobile';
 import {withRouter} from "react-router";
@@ -28,7 +28,6 @@ class Index extends React.Component {
         this.props.deleteUser()
     };
     goInput = (url)=>{
-        debugger
         this.props.history.push(url)
     }
 
@@ -67,8 +66,8 @@ class Index extends React.Component {
                 <Flex style={{height: "calc(100% - 45px)"}} direction="column" justify="center">
                     <WingBlank style={{width:'80%'}}>
                         <Button type="primary" onClick={()=>this.goInput(`/farmerIndex`)}>录入农户信息</Button><WhiteSpace />
-                        <Button type="primary">录入农资信息</Button><WhiteSpace />
-                        <Button type="primary">录入辅料信息</Button><WhiteSpace />
+                        <Button type="primary" onClick={()=>this.goInput(`/productIndex`)}>录入农资信息</Button><WhiteSpace />
+                        <Button type="primary" onClick={()=>this.goInput(`/excipientIndex`)}>录入辅料信息</Button><WhiteSpace />
                     </WingBlank>
                 </Flex>
             </div>

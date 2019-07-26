@@ -1,15 +1,15 @@
 import React from 'react';
 import {BrowserRouter, Route,Switch} from "react-router-dom";
-import Home from '../page/home/Home';
-import Login from '../page/login/Login';
-import Product from '../page/product/index';
-import FarmerInput from '../page/input/farmer';
-import ProductInput from '../page/input/product';
-import ExcipentInput from '../page/input/excipent';
+import Home from '@/page/home/Home';
+import Login from '@/page/login/Login';
+import Product from '@/page/product/index';
+import FarmerInput from '@/page/input/farmer';
+import ProductInput from '@/page/input/product';
+import ExcipentInput from '@/page/input/excipent';
 import {LocaleProvider} from "antd-mobile";
 import connect from "react-redux/es/connect/connect";
 import {IntlProvider} from 'react-intl';
-import {languages} from '../reducer/language_json'
+import {languages} from '@/reducer/language_json'
 
 @connect((state) => ({
     language: state.language,

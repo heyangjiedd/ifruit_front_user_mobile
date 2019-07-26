@@ -1,6 +1,6 @@
 import {
     TOGGLE_LANGUAGE,
-} from '../action/language'
+} from '@/action/language'
 import {languages} from './language_json'
 
 export default (state = languages[0], action) => {

@@ -1,15 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {addTodo, deleteTodo, pushTodo, popTodo} from '../../action/index'
-import Carousel from '../../component/carousel'
+import {addTodo, deleteTodo, pushTodo, popTodo} from '@/action/index'
+import Carousel from '@/component/carousel'
 import { TabBar,NoticeBar,List,Badge } from 'antd-mobile';
-import one from "../../assets/images/one.png";
-import two from "../../assets/images/two.png";
-import three from "../../assets/images/three.jpg";
-import four from "../../assets/images/four.jpg";
-import mangguo from "../../assets/images/mangguo.jpg";
-import pipa from "../../assets/images/pipa.jpg";
-import shiliu from "../../assets/images/shiliu.jpg";
+import one from "@/assets/images/one.png";
+import two from "@/assets/images/two.png";
+import three from "@/assets/images/three.jpg";
+import four from "@/assets/images/four.jpg";
+import mangguo from "@/assets/images/mangguo.jpg";
+import pipa from "@/assets/images/pipa.jpg";
+import shiliu from "@/assets/images/shiliu.jpg";
 
 import styles from './index.module.less'
 

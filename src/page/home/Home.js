@@ -1,15 +1,15 @@
 import React from 'react';
 import {TabBar,} from 'antd-mobile';
 import {Redirect, Route} from "react-router-dom";
-import Info from "../info/Info";
-import Activity from "../activity/Activity";
-import Main from "../main/Main";
-import home from '../../assets/icon/home.svg'
-import home_select from '../../assets/icon/home_select.svg'
-import about from '../../assets/icon/about.svg'
-import about_select from '../../assets/icon/about_select.svg'
-import user from '../../assets/icon/user.svg'
-import user_select from '../../assets/icon/user_select.svg'
+import Info from "@/page/info/Info";
+import Activity from "@/page/activity/Activity";
+import Main from "@/page/main/Main";
+import home from '@/assets/icon/home.svg'
+import home_select from '@/assets/icon/home_select.svg'
+import about from '@/assets/icon/about.svg'
+import about_select from '@/assets/icon/about_select.svg'
+import user from '@/assets/icon/user.svg'
+import user_select from '@/assets/icon/user_select.svg'
 import connect from "react-redux/es/connect/connect";
 
 import styles from './index.module.less'

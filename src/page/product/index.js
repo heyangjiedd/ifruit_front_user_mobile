@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Badge, ListView, PullToRefresh, NavBar, Icon, Flex} from 'antd-mobile';
-import one from "../../assets/images/one.png";
-import two from "../../assets/images/two.png";
-import three from "../../assets/images/three.jpg";
+import one from "@/assets/images/one.png";
+import two from "@/assets/images/two.png";
+import three from "@/assets/images/three.jpg";
 
 const data = [
     {
