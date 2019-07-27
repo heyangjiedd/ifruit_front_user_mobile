@@ -41,9 +41,8 @@ class Index extends React.Component {
                 }, true)
                 return;
             }
-            add({...fieldsValue}).then(()=>{
+            add({...fieldsValue,pid: fieldsValue.pid?fieldsValue.pid[0]:0,areaIds:fieldsValue.areaIds.join(','),}).then(()=>{
                 form.resetFields();
-                this.props.addUser({...fieldsValue});
                 this.props.history.goBack(-1)
             })
         });
@@ -69,14 +68,11 @@ class Index extends React.Component {
                         <Picker
                             title="选择地区"
                             extra="请选择地区"
-                            {...getFieldProps('areas', {
+                            {...getFieldProps('areaIds', {
                                 initialValue: [],
                                 rules: [{ required: true, message: '请选择地区！' }],
                             })}
                             data={this.state.areaTree}
-                            value={this.state.pickerValue}
-                            onChange={v => this.setState({ pickerValue: v })}
-                            onOk={v => this.setState({ pickerValue: v })}
                         >
                             <List.Item arrow="horizontal">区域</List.Item>
                         </Picker>

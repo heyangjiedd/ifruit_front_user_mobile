@@ -4,7 +4,7 @@ import {createForm} from 'rc-form';
 import {NavBar, Icon, List, InputItem, Flex, WhiteSpace,TextareaItem, Toast, Button,Picker,} from 'antd-mobile';
 import {queryNoPage as getProductTag} from '@/api/excipentTag'
 import {queryNoPage as getFarmer} from '@/api/product'
-import {add} from '@/api/farmer'
+import {add} from '@/api/excipent'
 import {listToTreeData,getDeep} from '@/utils'
 
 @createForm()
@@ -25,7 +25,7 @@ class Index extends React.Component {
     fetchFarmer(){
         getFarmer({pid:'0'}).then(res=>{
             this.setState({
-                product:res.data.filter(item=>!!item.pid).map(item=>({
+                product:res.data.map(item=>({
                     value:item.id,
                     label:item.tagList.map(r=>r.name).join('/'),
                 }))
@@ -40,9 +40,10 @@ class Index extends React.Component {
                 }, true)
                 return;
             }
-            add({...fieldsValue}).then(()=>{
+            add({...fieldsValue,
+                productId:fieldsValue.productId?fieldsValue.productId[0]:undefined,
+                tagIds:fieldsValue.tagIds.join(',')}).then(()=>{
                 form.resetFields();
-                this.props.addUser({...fieldsValue});
                 this.props.history.goBack(-1)
             })
         });
@@ -62,17 +63,14 @@ class Index extends React.Component {
                     <Picker
                         title="辅料标签"
                         extra="请选择"
-                        {...getFieldProps('areas', {
+                        {...getFieldProps('tagIds', {
                             initialValue: [],
                         })}
                         data={this.state.excipentTagTree}
-                        value={this.state.pickerValue}
-                        onChange={v => this.setState({ pickerValue: v })}
-                        onOk={v => this.setState({ pickerValue: v })}
                     >
                         <List.Item arrow="horizontal">辅料标签</List.Item>
                     </Picker>
-                    <Picker data={this.state.product} cols={1} {...getFieldProps('pid')} >
+                    <Picker data={this.state.product} cols={1} {...getFieldProps('productId')} >
                         <List.Item arrow="horizontal">产品</List.Item>
                     </Picker>
                     <InputItem{...getFieldProps('num')} clear placeholder="请输入地址">用量(kg)</InputItem>
