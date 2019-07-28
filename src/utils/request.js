@@ -3,7 +3,7 @@ import {Toast} from 'antd-mobile'
 // create an axios instance
 const service = axios.create({
     // baseURL: 'http://118.89.165.170:8081/api/', // url = base url + request url
-    // baseURL: 'http://localhost:8081/',
+    baseURL: 'http://www.heyangjie.cn:8020/',
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout
 })
