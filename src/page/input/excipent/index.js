@@ -27,7 +27,7 @@ class Index extends React.Component {
             this.setState({
                 product:res.data.map(item=>({
                     value:item.id,
-                    label:item.tagList.map(r=>r.name).join('/'),
+                    label:item.name,
                 }))
             })
         })
@@ -60,6 +60,9 @@ class Index extends React.Component {
                     onLeftClick={() => this.props.history.goBack(-1)}
                 >录入辅料信息</NavBar>
                 <List className="picker-list">
+                    <InputItem className={'required'} {...getFieldProps('name', {
+                        rules: [{ required: true, message: '请输入名称！' }],
+                    })} clear placeholder="请输入名称">名称</InputItem>
                     <Picker
                         title="辅料标签"
                         extra="请选择"

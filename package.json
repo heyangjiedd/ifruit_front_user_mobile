@@ -30,7 +30,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://118.89.165.170:8081/api/",
+  "proxy": "http://118.89.165.170:8081/",
   "eslintConfig": {
     "extends": "react-app"
   },
